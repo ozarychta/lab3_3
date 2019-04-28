@@ -7,7 +7,13 @@ import java.time.temporal.ChronoUnit;
 
 public class FakeClock extends Clock {
 
-    private Instant lastInstant = Instant.now();
+    private Instant lastInstant;
+    private int hoursPassingInInstant;
+
+    public FakeClock(int hoursPassingInInstant) {
+        this.hoursPassingInInstant = hoursPassingInInstant;
+        lastInstant = Instant.now();
+    }
 
     @Override public ZoneId getZone() {
         return ZoneId.systemDefault();
@@ -18,7 +24,7 @@ public class FakeClock extends Clock {
     }
 
     @Override public Instant instant() {
-        lastInstant = lastInstant.plus(24, ChronoUnit.HOURS);
+        lastInstant = lastInstant.plus(hoursPassingInInstant, ChronoUnit.HOURS);
         return lastInstant;
     }
 }
